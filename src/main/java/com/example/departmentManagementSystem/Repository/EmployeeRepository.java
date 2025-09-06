@@ -1,5 +1,6 @@
 package com.example.departmentManagementSystem.Repository;
 
+import com.example.departmentManagementSystem.Model.Department;
 import com.example.departmentManagementSystem.Model.Employee;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -15,10 +16,11 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
     List<Employee> findByEmailContainingIgnoreCase(String email);
     List<Employee> findBySalary(double salary);
     List<Employee> findByJoiningDate(LocalDate joiningDate);
-
+    List<Employee> findEmployeeByDepartmentId(Long departmentId);
     @Query("SELECT e FROM Employee e WHERE e.salary > :minSalary")
     List<Employee> findEmployeesWithSalaryGreaterThan(@Param("minSalary") double salary);
 
     //verify email does not exist
     boolean existsByEmail(String email);
+    boolean existsByDepartmentId(Long departmentId);
 }

@@ -74,5 +74,4 @@ public class DepartmentServiceImpl implements DepartmentService {
 
         return departmentRepo.save(department);
     }
-
 }

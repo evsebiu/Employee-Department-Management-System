@@ -18,7 +18,7 @@ import java.util.Optional;
 @RequestMapping("/api/departments")
 public class DepartmentController {
 
-    private DepartmentService departmentService;
+    private final DepartmentService departmentService;
 
     public DepartmentController(DepartmentService departmentService) {
         this.departmentService = departmentService;
@@ -34,11 +34,6 @@ public class DepartmentController {
         Optional<Department> department = departmentService.getDepartmentById(id);
         return department.map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
-    }
-
-    @PostMapping
-    public Department department(@RequestBody Department department) {
-        return departmentService.addDepartment(department);
     }
 
     @PutMapping("/{id}")
@@ -65,11 +60,6 @@ public class DepartmentController {
         }
     }
 
-    @GetMapping("/search/name")
-    public Optional<Department> searchByName(@RequestParam String name){
-        return departmentService.findByName(name);
-    }
-
     @PostMapping
     public ResponseEntity<Department> createDepartment(@RequestBody @Valid Department department){
         try {
@@ -77,6 +67,16 @@ public class DepartmentController {
             return ResponseEntity.status(HttpStatus.CREATED).body(saveDepartment);
         } catch (DuplicateResourceException e){
             return ResponseEntity.badRequest().build();
+        }
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<Optional<Department>> searchDepartments(@RequestParam(required = false) String name){
+        Optional<Department> departments = departmentService.findByName(name);
+        if (departments.isPresent()) {
+            return ResponseEntity.ok(departments);
+        } else {
+            return ResponseEntity.notFound().build();
         }
     }
 }

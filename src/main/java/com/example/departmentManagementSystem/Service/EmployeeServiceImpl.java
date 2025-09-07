@@ -3,6 +3,7 @@ package com.example.departmentManagementSystem.Service;
 
 import com.example.departmentManagementSystem.Exception.DuplicateResourceException;
 import com.example.departmentManagementSystem.Exception.ResourceNotFoundException;
+import com.example.departmentManagementSystem.Model.Department;
 import com.example.departmentManagementSystem.Model.Employee;
 import com.example.departmentManagementSystem.Repository.DepartmentRepository;
 import com.example.departmentManagementSystem.Repository.EmployeeRepository;
